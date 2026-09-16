@@ -1,0 +1,98 @@
+{
+  "inlay_hints": {
+    "enabled": true,
+  },
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "cargo": {
+          "allFeatures": true,
+        },
+        "check": {
+          "command": "clippy",
+        },
+        "inlayHints": {
+          "maxLength": null,
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true,
+          },
+          "closureReturnTypeHints": {
+            "enable": "always",
+          },
+        },
+        "completion": {
+          "snippets": {
+            "custom": {
+              "ae": {
+                "postfix": "ae",
+                "body": "assert_eq!(${receiver}, );",
+                "description": "Assert equal with something",
+                "scope": "expr",
+              },
+              "println": {
+                "postfix": "pl",
+                "body": "println!(\"{:?}\", ${receiver});",
+                "description": "Print the expression using Debug formatting",
+                "scope": "expr",
+              },
+              "dbg": {
+                "postfix": "dbg",
+                "body": "dbg!(\"{:?}\", ${receiver});",
+                "description": "Debug the expression",
+                "scope": "expr",
+              },
+              "Ok": {
+                "postfix": "ok",
+                "body": "Ok(${receiver})",
+                "description": "Wrap the expression in a `Result::Ok`",
+                "scope": "expr",
+              },
+              "Box::pin": {
+                "postfix": "pinbox",
+                "body": "Box::pin(${receiver})",
+                "requires": "std::boxed::Box",
+                "description": "Put the expression into a pinned `Box`",
+                "scope": "expr",
+              },
+              "Arc::new": {
+                "postfix": "arc",
+                "body": "Arc::new(${receiver})",
+                "requires": "std::sync::Arc",
+                "description": "Put the expression into an `Arc`",
+                "scope": "expr",
+              },
+              "Some": {
+                "postfix": "some",
+                "body": "Some(${receiver})",
+                "description": "Wrap the expression in an `Option::Some`",
+                "scope": "expr",
+              },
+              "Err": {
+                "postfix": "err",
+                "body": "Err(${receiver})",
+                "description": "Wrap the expression in a `Result::Err`",
+                "scope": "expr",
+              },
+              "Rc::new": {
+                "postfix": "rc",
+                "body": "Rc::new(${receiver})",
+                "requires": "std::rc::Rc",
+                "description": "Put the expression into an `Rc`",
+                "scope": "expr",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  "linked_edits": true,
+  "show_whitespaces": "none",
+  "remove_trailing_whitespace_on_save": true,
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware",
+  },
+  "semantic_tokens": "combined",
+}
