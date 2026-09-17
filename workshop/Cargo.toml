@@ -1,0 +1,8 @@
+[workspace]
+resolver = "3"
+members = [
+    "1-hello-world",
+    "2-guessing-game",
+    "3-variables",
+    "4-control-flow", "utils",
+]
