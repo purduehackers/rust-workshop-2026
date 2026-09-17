@@ -14,7 +14,7 @@
 
 #show: metropolis-theme.with(
   align: start,
-  config-common(new-section-slide-fn: none),
+  // config-common(new-section-slide-fn: none),
   config-info(
     title: [Introduction to the Rust Programming Language],
     subtitle: [#datetime(year: 2026, month: 10, day: 1).display() — A Purdue Hackers workshop],
@@ -24,8 +24,16 @@
   ),
 )
 
+#show raw.where(block: true): block.with(
+  fill: luma(240),
+  stroke: 0.5pt + luma(200),
+  inset: 1em,
+  radius: 0.3em,
+  width: 100%,
+)
+#show raw.where(block: true): set text(size: 1.2em)
+
 #text(size: 1.2em)[#title-slide(extra: place(horizon, dx: 27em, dy: -1em)[
-  // #image(width: 13em, "ferris.png")
   #figure(
     image(width: 14em, "ferris.png"),
     caption: text(size: 1.2em)[=== Ferris, the Rust mascot],
@@ -36,8 +44,6 @@
 = What is Rust?
 
 #slide(align: horizon)[
-  #pause
-
   Rust is a general-purpose programming language that empowers #al(<end-1>)everyone to build reliable and efficient software.
   #align(center)[— https://rust-lang.org/]
 
@@ -202,11 +208,67 @@
 
 #focus-slide[Let's learn some Rust!]
 
-= Setting Up
+= Setting Up <touying:hidden>
 
 #slide(align: center + horizon)[
   === https://code.purduehackers.com/new/purduehackers/rust-workshop-2026
+
+  #image(width: 40%, "qr.png")
 ]
+
+= Hello World <touying:hidden>
+
+```rust
+fn main() {
+    println!("Hello World!");
+}
+```
+
+#image(width: 20%, "ferris-gesture.png")
+
+= Ownership <touying:hidden>
+
+=== How do programming languages manage memory?
+#pause
+- Python, Java, Typescript: automatically with overhead
+#pause
+- C, C++: you must manage memory yourself
+#pause
+What does Rust do? #pause It picks a third option:
+
+- Rust: the compiler enforces the rules of ownership! #pause
+  - The rules manage memory without overhead #pause
+  - If any rules are violated, your program won't compile #pause
+
+---
+
+#slide[
+  Let's focus on a very common data structure: strings
+
+  #only("1-2")[
+    ```rust
+    fn main() {
+        let ph: &str = "Purdue Hackers";
+        println!("{ph} is awesome!");
+    }
+    ```
+  ]
+  #only(2)["Purdue Hackers" is hardcoded into the program]
+  #only("3-4")[
+    ```rust
+    fn main() {
+        let idk: &str = utils::read_string();
+        println!("{idk} is awesome!");
+    }
+    ```
+  ]
+  #only(4)[
+    Rust program -> 
+  ]
+  // #arrow-label()
+]
+
+
 
 #focus-slide[Thank you for listening!]
 
