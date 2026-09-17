@@ -253,6 +253,7 @@ What does Rust do? #pause It picks a third option:
     }
     ```
   ]
+
   #only(2)["Purdue Hackers" is hardcoded into the program]
   #only("3-4")[
     ```rust
@@ -263,7 +264,7 @@ What does Rust do? #pause It picks a third option:
     ```
   ]
   #only(4)[
-    Rust program -> 
+    Rust program ->
   ]
   // #arrow-label()
 ]
@@ -275,6 +276,8 @@ What does Rust do? #pause It picks a third option:
 #show: appendix
 #set text(size: 24pt)
 
-#bibliography("bib.yaml")
-
 = Appendix
+
+== References
+
+#bibliography("bib.yaml")
