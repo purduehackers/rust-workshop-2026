@@ -4,5 +4,5 @@ members = [
     "1-hello-world",
     "2-guessing-game",
     "3-variables",
-    "4-control-flow", "utils",
+    "4-control-flow", "5-ownership", "utils",
 ]

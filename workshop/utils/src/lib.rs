@@ -2,7 +2,7 @@
 ///
 /// # Panics
 ///
-/// This function panicks and terminates the program
+/// This function panics and terminates the program
 /// if the program cannot read user input for
 /// whatever reason.
 pub fn read_string() -> String {
@@ -21,7 +21,7 @@ pub fn read_string() -> String {
 ///
 /// # Panics
 ///
-/// This function panicks and terminates the program
+/// This function panics and terminates the program
 /// if the user input is not a valid number, or the
 /// program cannot read user input for whatever reason.
 pub fn read_number() -> i32 {

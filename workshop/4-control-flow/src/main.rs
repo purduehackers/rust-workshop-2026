@@ -1,30 +1,47 @@
-fn main() {
-    let mut x = utils::read_number();
+//! A program that demonstrates control flow.
+//! using if statements and while loops, featuring
+//! a coding challenge.
+//!
+//! Run this program by entering the following
+//! command into your terminal from the
+//! `workshop` directory:
+//!
+//! cargo run --bin control-flow
 
-    if x == 42 {
+fn main() {
+    println!("Enter a number:");
+    let mut int = utils::read_number();
+
+    if int == 42 {
         println!("42 is the meaning of life");
     }
 
-    let abs_x = if x < 0 {
-        -x
+    let abs = if int < 0 {
+        -int
     } else {
-        x
+        int
     };
 
-    println!("The absolute value of the number is {abs_x}");
+    println!("The absolute value of the number is {abs}");
 
-    if x < 0 {
+    if int < 0 {
         println!("The number is negative");
-    } else if x == 0 {
+
+        // Challenge: if `int` is negative,
+        // add one until `int` is zero.
+
+        // Your code here:
+        
+    } else if int == 0 {
         println!("The number is zero");
-    } else if x > 0 {
+    } else if int > 0 {
         println!("The number is positive");
 
-        // If `x` is positive, let's
-        // subtract one until `x` is zero.
-        while x != 0 {
-            println!("Count down: {x}");
-            x -= 1;
+        // If `int` is positive, let's
+        // subtract one until `int` is zero.
+        while int != 0 {
+            println!("Count down: {int}");
+            int -= 1;
         }
     } else {
         println!("Whoops, mathematics broke");

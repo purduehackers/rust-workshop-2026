@@ -21,7 +21,6 @@
         },
       },
       "settings": {
-        "exportPdf": "onSave",
         "outputPath": "$root/$name",
         "formatterMode": "typstyle",
         "formatterIndentSize": 2,
