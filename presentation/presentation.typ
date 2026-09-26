@@ -5,7 +5,7 @@
 #import "@preview/cetz-venn:0.2.0"
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
-#show: codly-init.with()
+#show: codly-init
 
 #codly(
   number-format: it => "",
@@ -33,11 +33,15 @@
   let keep = ()
   for line in lines {
     let parts = line.split(regex("\s*//>\s*"))
-    let min-i = int(parts.at(1, default: 1))
+    let meta-parts = parts.at(1, default: "1").split(" ")
+    let min-i = int(meta-parts.at(0))
     if self.subslide >= min-i {
       keep.push(parts.at(0))
     } else {
-      keep.push("")
+      let newlines = int(meta-parts.at(1, default: 1))
+      for _ in range(newlines) {
+        keep.push("")
+      }
     }
   }
   raw(keep.join("\n"), block: code.block, lang: code.lang)
@@ -45,8 +49,9 @@
 
 #let red(n) = (n, color.red.lighten(80%))
 #let green(n) = (n, color.green.lighten(75%))
-#let hl(g: (), r: ()) = codly(
-  highlighted-lines: g.map(green) + r.map(red),
+#let yellow(n) = (n, color.yellow.lighten(75%))
+#let hl(g: (), r: (), h: ()) = codly(
+  highlighted-lines: g.map(green) + r.map(red) + h.map(yellow),
 )
 
 #let cetz-canvas = touying-reducer.with(
@@ -61,6 +66,12 @@
   stroke: 2pt,
 )
 
+#let codly-hl = local.with(
+  highlight-inset: 0pt,
+  header: box(height: 0.5em),
+  footer: box(height: 0.5em),
+)
+
 #show: metropolis-theme.with(
   align: start,
   config-info(
@@ -69,6 +80,9 @@
     author: [Arhan Chaudhary],
     institution: [https://github.com/ArhanChaudhary],
     contact: [arhan.ch\@gmail.com],
+  ),
+  config-common(
+    new-section-slide-fn: none,
   ),
 )
 
@@ -81,6 +95,8 @@
 ])]
 
 = What is Rust?
+
+#pause
 
 #slide(align: horizon)[
   Rust is a general-purpose programming language that empowers #al(<end-1>)everyone to build reliable and efficient software.
@@ -101,7 +117,7 @@
   ]
 ]
 
-= How is Rust empowering? <touying:hidden>
+= How is Rust empowering?
 
 #slide(repeat: 4, self => [
   #place(center, dy: -1.5em)[
@@ -250,13 +266,13 @@
 
 #focus-slide[Let's learn some Rust!]
 
-= Setting Up <touying:hidden>
+= Setting Up
 
 #slide(align: center + horizon)[
   === https://code.purduehackers.com/new/purduehackers/rust-workshop-2026
 ]
 
-= Hello World <touying:hidden>
+= Hello World
 
 ```rust
 fn main() {
@@ -276,7 +292,7 @@ fn main() {
   ]
 ]
 
-= Guessing Game <touying:hidden>
+= Guessing Game
 
 #text(size: 0.7em)[#grid(
   columns: 2,
@@ -315,7 +331,7 @@ fn main() {
   ```,
 )]
 
-= Variables <touying:hidden>
+= Variables
 
 ```rs
 fn mutability() {
@@ -354,12 +370,9 @@ fn mutability() {
 
 #slide(repeat: 4, self => {
   if self.subslide == 4 {
-    local(
-      highlight-inset: 0pt,
+    codly-hl(
       highlight-outset: (x: 0.25em, y: 0.3em),
-      highlights: ((line: 5, start: 5, end: 5, fill: yellow), (line: 8, start: 5, end: 5, fill: yellow)),
-      header: box(height: 0.5em),
-      footer: box(height: 0.5em),
+      highlights: ((line: 5, start: 5, end: 5), (line: 8, start: 5, end: 5)),
     )[
       ```rs
       fn scope() {
@@ -383,12 +396,11 @@ fn mutability() {
 
         { //> 2
             let power = power * 2; // 10000 //> 2
-            println!("The power level is: {power}. The power level is over 9000!!"); //> 2
+            println!("The power level is: {power}. The power level is over 9000!!"); //> 2 2
         } //> 2
 
         println!("The power level is back to: {power}"); //> 3
-    }
-    ```)
+    }```)
   }
 })
 
@@ -415,7 +427,7 @@ fn mutability() {
   ]
 })
 
-= Control Flow <touying:hidden>
+= Control Flow
 
 #slide(repeat: 3, self => {
   animated-code(self)[```rs
@@ -450,13 +462,13 @@ fn mutability() {
 })
 
 
-= Ownership <touying:hidden>
+= Ownership
 
 #pause
 
 #align(horizon + center)[
   === Ownership can be confusing!
-  Do not be afraid to ask me questions
+  Don't be afraid to ask questions!
 ]
 
 ---
@@ -477,7 +489,11 @@ It picks a third option:
 
 - Rust: the compiler enforces the rules of ownership! #pause
   - The rules manage memory automatically *without overhead* #pause
-  - Memory unsafe $=>$ the rules are violated $=>$ your program won't compile #pause
+  - Memory unsafe $=>$ the rules are violated $=>$ your program won't compile
+
+---
+
+
 
 ---
 
@@ -729,12 +745,9 @@ let a: String = utils::read_string();
 #slide(repeat: 2, self => [
   How do Strings interact with scopes?
 
-  #local(
-    highlight-inset: 0pt,
+  #codly-hl(
     highlight-outset: (x: 0.25em, y: 0.3em),
-    highlights: ((line: 2, start: 5, end: 5, fill: yellow), (line: 7, start: 5, end: 5, fill: yellow)),
-    header: box(height: 0.5em),
-    footer: box(height: 0.5em),
+    highlights: ((line: 2, start: 5, end: 5), (line: 7, start: 5, end: 5)),
   )[
     #animated-code(self, ```rs
     fn main() {
@@ -783,15 +796,20 @@ let a: String = utils::read_string();
 
 ---
 
+#let ownership-example = ```rs
+fn main() {
+    let a: String = utils::read_string();
+    let a2: String = a;
+    println!("{a} is awesome!");
+}
+```
+
 #{
   set text(size: 0.75em)
   alternatives[
-    #local(
-      highlight-inset: 0pt,
+    #codly-hl(
       highlight-outset: (x: 0.25em, y: 0.3em),
-      highlights: ((line: 2, start: 5, end: 5, fill: yellow), (line: 6, start: 5, end: 5, fill: yellow)),
-      header: box(height: 0.5em),
-      footer: box(height: 0.5em),
+      highlights: ((line: 2, start: 5, end: 5), (line: 6, start: 5, end: 5)),
     )[
       ```rs
       fn main() {
@@ -804,32 +822,13 @@ let a: String = utils::read_string();
       ```
     ]
   ][
-    #local(
-      highlight-inset: 0pt,
+    #codly-hl(
       highlight-outset: (x: 0.25em, y: 0.3em),
-      highlights: ((line: 1, start: 11, end: 11, fill: yellow), (line: 5, start: 1, end: 1, fill: yellow)),
-      header: box(height: 0.5em),
-      footer: box(height: 0.5em),
-    )[
-      ```rs
-      fn main() {
-          let a: String = utils::read_string();
-          let a2: String = a;
-          println!("{a} is awesome!");
-      }
-      ```
-    ]
-  ][
-    ```rs
-    fn main() {
-        let a: String = utils::read_string();
-        let a2: String = a;
-        println!("{a} is awesome!");
-    }
-    ```
-  ]
+      highlights: ((line: 1, start: 11, end: 11), (line: 5, start: 1, end: 1)),
+    )[#ownership-example]
+  ][#ownership-example]
 
-  pause
+  jump(3)
 
   place(center, dx: -4em)[
     #grid(
@@ -841,7 +840,7 @@ let a: String = utils::read_string();
       grid.cell(rowspan: 2)[
         \
         \
-        #alternatives[
+        #alternatives(start: 3)[
           #heap-table
         ][
           #show table.cell: it => if it.y >= 2 { hide(it) } else { it }
@@ -852,14 +851,14 @@ let a: String = utils::read_string();
       a-table(two: true),
     )
     #alternatives-match((
-      "4-5": label-arrow(
+      "3-4": label-arrow(
         <first>,
         <second>,
         to-offset: (1.5em - 4em, -2.8em),
         from-offset: (4.95em - 4em, 0.3em),
         bend: 31,
       ),
-      "6-": [
+      "5-": [
         #label-arrow(
           <first>,
           <second>,
@@ -871,7 +870,7 @@ let a: String = utils::read_string();
         )
         #place(dx: 16em, dy: -12em)[#text(fill: color.red)[#b[Invalid?]]] ],
     ))
-    #alternatives(start: 4)[
+    #alternatives(start: 3)[
       #label-arrow(<third>, <second>, to-offset: (1.5em - 4em, -2.8em), from-offset: (-1.3em, 3em), bend: -60)
     ][
       #label-arrow(
@@ -886,7 +885,7 @@ let a: String = utils::read_string();
       #place(dx: 16em, dy: -6.5em)[#text(fill: color.red)[#b[Invalid]]]
     ]
   ]
-  uncover("7-")[
+  uncover("6-")[
     #place(horizon + right, dy: 5em, dx: 1em)[
       #align(center)[ #b[This is a memory safety bug! \ This leads to undefined behavior!] ]
     ]
@@ -908,7 +907,64 @@ fn main() {
   borrow of moved value: \`a\`
 ]
 
-= Further Reading <touying:hidden>
+#align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
+
+---
+
+=== What are the rules of ownership?
+
+#pause
+- Each value in Rust has an owner #pause
+- There can only be one owner at a time #pause
+- When the owner goes out of scope, the value will be cleaned up
+
+---
+
+#text(size: 0.75em)[
+  #ownership-example
+]
+
+---
+
+#text(size: 0.75em)[#alternatives[
+  #hl(g: (4,), r: (3,))
+  ```rs
+  fn main() {
+      let a: String = utils::read_string();
+      let a2: String = a;
+      let a2: String = a.clone();
+      println!("{a} is awesome!");
+  }
+  ```
+
+  #align(center)[
+    #grid(
+      columns: 3,
+      column-gutter: 4em,
+      a-table(two: false), place(dy: 3.9em, dx: -1.5em)[Invalid],
+
+      heap-table,
+    )
+    #label-arrow(
+      <first>,
+      <second>,
+      to-offset: (1.5em, -2.3em),
+      from-offset: (5em, -2.3em),
+    )
+  ]
+][
+  #hl(g: (5,), r: (4,))
+  ```rs
+  fn main() {
+      let a: String = utils::read_string();
+      let a2: String = a;
+      println!("{a} is awesome!");
+      println!("{a2} is awesome!");
+  }
+  ```
+]]
+
+= Further Reading
 
 - The Rust Programming Language
 - Rustlings
@@ -926,6 +982,6 @@ fn main() {
 #show: appendix
 #set text(size: 24pt)
 
-= Appendix <touying:hidden>
+= Appendix
 
 #bibliography("bib.yaml")
