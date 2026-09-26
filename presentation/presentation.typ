@@ -926,43 +926,106 @@ fn main() {
 
 ---
 
-#text(size: 0.75em)[#alternatives[
-  #hl(g: (4,), r: (3,))
-  ```rs
-  fn main() {
-      let a: String = utils::read_string();
-      let a2: String = a;
-      let a2: String = a.clone();
-      println!("{a} is awesome!");
-  }
-  ```
+#{
+  set text(size: 0.75em)
+  hl(h: (2,))
+  ownership-example
 
-  #align(center)[
+  place(center, dx: -4em)[
     #grid(
-      columns: 3,
-      column-gutter: 4em,
-      a-table(two: false), place(dy: 3.9em, dx: -1.5em)[Invalid],
-
-      heap-table,
+      columns: 2,
+      rows: 2,
+      column-gutter: 8em,
+      row-gutter: 1.5em,
+      a-table(two: false),
+      grid.cell(rowspan: 2)[
+        \
+        \
+        #heap-table
+      ],
     )
     #label-arrow(
       <first>,
       <second>,
-      to-offset: (1.5em, -2.3em),
-      from-offset: (5em, -2.3em),
+      to-offset: (1.5em - 4em, -2.8em),
+      from-offset: (4.95em - 4em, 0.3em),
+      bend: 31,
     )
   ]
-][
-  #hl(g: (5,), r: (4,))
-  ```rs
-  fn main() {
-      let a: String = utils::read_string();
-      let a2: String = a;
-      println!("{a} is awesome!");
-      println!("{a2} is awesome!");
-  }
-  ```
-]]
+}
+
+---
+
+#{
+  set text(size: 0.75em)
+  hl(h: (3,))
+  ownership-example
+
+  place(center, dx: -4em)[
+    #grid(
+      columns: 2,
+      rows: 2,
+      column-gutter: 8em,
+      row-gutter: 1.5em,
+      {
+        set table.cell(fill: luma(170))
+        a-table(two: false)
+      },
+      grid.cell(rowspan: 2)[
+        \
+        \
+        #heap-table
+      ],
+      a-table(two: true),
+    )
+    #label-arrow(
+      <third>,
+      <second>,
+      to-offset: (1.5em - 4em, -2.8em),
+      from-offset: (-1.3em, 3em),
+      bend: -60,
+    )
+  ]
+}
+
+---
+
+#{
+  set text(size: 0.75em)
+  hl(h: (5,))
+  ownership-example
+
+  place(center, dx: -4em)[
+    #grid(
+      columns: 2,
+      rows: 2,
+      column-gutter: 8em,
+      row-gutter: 1.5em,
+      {
+        set table.cell(fill: luma(170))
+        a-table(two: false)
+      },
+      grid.cell(rowspan: 2)[
+        \
+        \
+        #show table.cell: it => if it.y >= 2 { hide(it) } else { it }
+        #set table(fill: (_, y) => if y == 1 { luma(240) } else if y >= 2 { luma(200) })
+        #heap-table
+      ],
+      a-table(two: true),
+    )
+    #label-arrow(
+      <third>,
+      <second>,
+      to-offset: (1.5em - 4em, -2.8em),
+      from-offset: (-1.3em, 3em),
+      bend: -60,
+      stroke: color.red + 2pt,
+      tip: (fill: color.red, symbol: ">"),
+    )
+    #place(dx: 16em, dy: -6.5em)[#text(fill: color.red)[#b[Invalid]]]
+  ]
+}
 
 = Further Reading
 
