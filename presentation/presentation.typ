@@ -292,49 +292,10 @@ fn main() {
   ]
 ]
 
-= Guessing Game
-
-#text(size: 0.7em)[#grid(
-  columns: 2,
-  column-gutter: 1em,
-  ```
-  $ cargo run --bin guessing-game
-      Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.10s
-       Running `target/debug/guessing-game`
-  Guess the number!
-  Please input your guess.
-  60
-  You guessed: 60
-  Too small!
-  Please input your guess.
-  80
-  You guessed: 80
-  Too big!
-  Please input your guess.
-  73
-  You guessed: 73
-  Too big!
-  ```,
-  ```
-  Please input your guess.
-  66
-  You guessed: 66
-  Too small!
-  Please input your guess.
-  70
-  You guessed: 70
-  Too big!
-  Please input your guess.
-  68
-  You guessed: 68
-  You win!
-  ```,
-)]
-
 = Variables
 
 ```rs
-fn mutability() {
+fn variables() {
     let power = 1000;
     println!("The power level is: {power}");
     power = 2000;
@@ -452,11 +413,11 @@ fn mutability() {
   fn main() {
       // Reads a user input number from the terminal
       let int: i32 = utils::read_number();
-      // If `x` is positive, let's //> 2
-      // subtract one until `x` is zero. //> 2
-      while x != 0 { //> 2
-          println!("Count down: {x}"); //> 2
-          x -= 1; //> 2
+      // If `int` is positive, let's //> 2
+      // subtract one until `int` is zero. //> 2
+      while int != 0 { //> 2
+          println!("Count down: {int}"); //> 2
+          int -= 1; //> 2
       } //> 2
   }```]
 })

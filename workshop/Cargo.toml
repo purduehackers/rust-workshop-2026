@@ -2,10 +2,10 @@
 resolver = "3"
 members = [
     "1-hello-world",
-    "2-guessing-game",
-    "3-variables",
-    "4-control-flow",
-    "5-ownership",
+    "2-variables",
+    "3-control-flow",
+    "4-ownership",
+    "5-borrowing",
     "6-rectangle",
     "utils",
 ]

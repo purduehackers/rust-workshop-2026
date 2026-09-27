@@ -8,26 +8,13 @@
 //! cargo run --bin variables
 
 // Remember, `main` is the entrypoint. Here we
-// call the three other defined functions.
+// call the two other defined functions.
 fn main() {
-    mutability();
-    scope();
+    variables();
     data_types();
 }
 
-fn scope() {
-    let power = 5000;
-    println!("The power level is: {power}");
-
-    {
-        let power = power * 2;
-        println!("The power level is: {power}. The power level is over 9000!!");
-    }
-
-    println!("The power level is back to: {power}");
-}
-
-fn mutability() {
+fn variables() {
     let power = 1000;
     println!("The power level is: {power}");
 
