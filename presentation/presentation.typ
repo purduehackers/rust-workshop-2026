@@ -310,7 +310,7 @@ fn main() {
 #slide(repeat: 3, self => {
   if self.subslide == 1 {
     ```rs
-    fn main() z{
+    fn main() {
         let power = 1000;
         println!("The power level is: {power}");
 
@@ -374,23 +374,45 @@ fn main() {
 ---
 
 #slide(repeat: 5, self => {
-  animated-code(self)[```rs
-  fn data_types() {
-      // Every variable has a singular, fixed type!
-      // `int` has the integer type `i32`
-      let mut int = 5;
-      // `int2` is optionally annotated explicitly //> 2
-      let int2: i32 = 5; //> 2
-      let true_or_false: bool = true; //> 3
-      let decimal: f64 = 4.5; //> 4
+  if self.subslide == 5 {
+    codly-hl(
+      highlight-outset: (x: 0em, y: 0.3em),
+      highlights: (
+        (line: 4, start: 8, end: 12, fill: color.green.lighten(75%)),
+      ),
+      highlight-fill: color => color,
+      highlighted-lines: ((10, color.green.lighten(75%)),),
+    )[
+      ```rs
+      fn data_types() {
+          // Every variable has a singular, fixed type!
+          // `int` has the integer type `i32`
+          let mut int = 5;
+          // `int2` is optionally annotated explicitly
+          let int2: i32 = 5;
+          let true_or_false: bool = true;
+          let decimal: f64 = 4.5;
 
-      int = decimal; // different types //> 5
-  }```]
-  only(5)[
-    #text(font: "DejaVu Sans Mono")[
+          int = decimal; // different types
+      }```
+    ]
+    text(font: "DejaVu Sans Mono")[
       #err([0308], [mismatched types])
     ]
-  ]
+  } else {
+    animated-code(self)[```rs
+    fn data_types() {
+        // Every variable has a singular, fixed type!
+        // `int` has the integer type `i32`
+        let int = 5;
+        // `int2` is optionally annotated explicitly //> 2
+        let int2: i32 = 5; //> 2
+        let true_or_false: bool = true; //> 3
+        let decimal: f64 = 4.5; //> 4
+        
+        
+    }```]
+  }
 })
 
 = Control Flow
@@ -1063,7 +1085,7 @@ This is too verbose!
   ```
 ]
 
-- \``&a`\` _borrows_ the value #pause
+- \``&a`\` _borrows_ the value from the owner #pause
   - Immutable borrow (*Read-only*) #pause
   - What if we wanted to borrow, but write to the value?
 
