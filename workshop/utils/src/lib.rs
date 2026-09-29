@@ -1,3 +1,5 @@
+use std::io::{self, Write};
+
 /// Reads one line of user input.
 ///
 /// # Panics
@@ -10,11 +12,18 @@ pub fn read_string() -> String {
     // First, we declare an empty string to read the user input into.
     let mut user_input_string = String::new();
 
+    io::stdout().flush().expect("Could not flush line.");
+
     // Read the actual user input into the string.
     std::io::stdin()
         .read_line(&mut user_input_string)
         .expect("Could not read line.");
-    user_input_string
+    
+    // Remove the newline from the user input string and return that.
+    // `.trim()` gives us a `&str`, and this function expects a
+    // `String`. We use the provided `to_string()` method to perform
+    // this conversion.
+    user_input_string.trim().to_string()
 }
 
 /// Reads a number from user input.

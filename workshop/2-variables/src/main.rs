@@ -7,14 +7,7 @@
 //!
 //! cargo run --bin variables
 
-// Remember, `main` is the entrypoint. Here we
-// call the two other defined functions.
 fn main() {
-    variables();
-    data_types();
-}
-
-fn variables() {
     let power = 1000;
     println!("The power level is: {power}");
 

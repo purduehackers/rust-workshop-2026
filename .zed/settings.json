@@ -33,6 +33,7 @@
         },
         "check": {
           "command": "clippy",
+          "workspace": false,
         },
         "inlayHints": {
           "maxLength": null,

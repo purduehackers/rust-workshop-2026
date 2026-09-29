@@ -47,12 +47,25 @@
   raw(keep.join("\n"), block: code.block, lang: code.lang)
 }
 
+#let ownership-example = ```rs
+fn main() {
+    let a: String = utils::read_string();
+    let a2: String = a;
+    println!("{a} is awesome!");
+}
+```
+
 #let red(n) = (n, color.red.lighten(80%))
 #let green(n) = (n, color.green.lighten(75%))
 #let yellow(n) = (n, color.yellow.lighten(75%))
 #let hl(g: (), r: (), h: ()) = codly(
   highlighted-lines: g.map(green) + r.map(red) + h.map(yellow),
 )
+
+#let err(n, body) = text(font: "DejaVu Sans Mono")[
+  #text(rgb(205, 75, 62), weight: "bold")[error[E#n]]:
+  #body
+]
 
 #let cetz-canvas = touying-reducer.with(
   reduce: cetz.canvas,
@@ -98,7 +111,7 @@
 
 #pause
 
-#slide(align: horizon)[
+#align(horizon)[
   Rust is a general-purpose programming language that empowers #al(<end-1>)everyone to build reliable and efficient software.
   #align(center)[— https://rust-lang.org/]
 
@@ -294,76 +307,69 @@ fn main() {
 
 = Variables
 
-```rs
-fn variables() {
-    let power = 1000;
-    println!("The power level is: {power}");
-    power = 2000;
-    println!("The power level is now: {power}");
-}
-```
+#slide(repeat: 3, self => {
+  if self.subslide == 1 {
+    ```rs
+    fn main() z{
+        let power = 1000;
+        println!("The power level is: {power}");
 
-#pause
 
-#text(font: "DejaVu Sans Mono")[
-  #text(rgb(205, 75, 62), weight: "bold")[error[E0384]]:
-  cannot assign twice to immutable variable power
-]
-
-#align(center + bottom)[#image(height: 1fr, "ferris-confused.svg")]
-
----
-
-#hl(g: (3,), r: (2,))
-```rs
-fn mutability() {
-    let power = 1000;
-    let mut power = 1000;
-    println!("The power level is: {power}");
-    power = 2000;
-    println!("The power level is now: {power}");
-}
-```
-
-#align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
-
----
-
-#slide(repeat: 4, self => {
-  if self.subslide == 4 {
+    }
+    ```
+  } else if self.subslide == 2 {
     codly-hl(
       highlight-outset: (x: 0.25em, y: 0.3em),
-      highlights: ((line: 5, start: 5, end: 5), (line: 8, start: 5, end: 5)),
+      highlights: ((line: 1, start: 11, end: 11), (line: 6, start: 1)),
     )[
       ```rs
-      fn scope() {
-          let power = 5000;
+      fn main() { // this creates a scope
+          let power = 1000;
           println!("The power level is: {power}");
 
-          { // this creates a scope
-              let power = power * 2; // 10000
-              println!("The power level is: {power}. The power level is over 9000!!");
-          }
 
-          println!("The power level is back to: {power}");
       }
       ```
     ]
+    [Variables are only valid inside scopes (curly braces)]
   } else {
-    animated-code(self, ```rs
-    fn scope() {
-        let power = 5000;
+    ```rs
+    fn main() {
+        let power = 1000;
         println!("The power level is: {power}");
+        power = 2000;
+        println!("The power level is now: {power}");
+    }
+    ```
+    text(font: "DejaVu Sans Mono")[
+      #text(rgb(205, 75, 62), weight: "bold")[error[E]]:
+    ]
+    err([0384], [cannot assign twice to immutable variable \`power\`])
 
-        { //> 2
-            let power = power * 2; // 10000 //> 2
-            println!("The power level is: {power}. The power level is over 9000!!"); //> 2 2
-        } //> 2
-
-        println!("The power level is back to: {power}"); //> 3
-    }```)
+    align(center + bottom)[#image(height: 1fr, "ferris-confused.svg")]
   }
 })
+
+---
+
+#codly-hl(
+  highlight-outset: (x: 0em, y: 0.3em),
+  highlights: (
+    (line: 2, start: 8, end: 12, fill: color.green.lighten(75%)),
+  ),
+  highlight-fill: color => color,
+)[
+  ```rs
+  fn main() {
+      let mut power = 1000;
+      println!("The power level is: {power}");
+      power = 2000;
+      println!("The power level is now: {power}");
+  }
+  ```
+]
+
+#align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
 
 ---
 
@@ -382,8 +388,7 @@ fn mutability() {
   }```]
   only(5)[
     #text(font: "DejaVu Sans Mono")[
-      #text(rgb(205, 75, 62), weight: "bold")[error[E0308]]:
-      mismatched types
+      #err([0308], [mismatched types])
     ]
   ]
 })
@@ -757,14 +762,6 @@ let a: String = utils::read_string();
 
 ---
 
-#let ownership-example = ```rs
-fn main() {
-    let a: String = utils::read_string();
-    let a2: String = a;
-    println!("{a} is awesome!");
-}
-```
-
 #{
   set text(size: 0.75em)
   alternatives[
@@ -791,7 +788,7 @@ fn main() {
 
   jump(3)
 
-  place(center, dx: -4em)[
+  place(center, dx: -4em, dy: 0.25em)[
     #grid(
       columns: 2,
       rows: 2,
@@ -815,16 +812,16 @@ fn main() {
       "3-4": label-arrow(
         <first>,
         <second>,
-        to-offset: (1.5em - 4em, -2.8em),
-        from-offset: (4.95em - 4em, 0.3em),
+        to-offset: (1.5em - 4em, -2.8em - 0.25em),
+        from-offset: (4.95em - 4em, 0.3em - 0.25em),
         bend: 31,
       ),
       "5-": [
         #label-arrow(
           <first>,
           <second>,
-          to-offset: (1.5em - 4em, -2.8em),
-          from-offset: (4.95em - 4em, 0.3em),
+          to-offset: (1.5em - 4em, -2.8em - 0.25em),
+          from-offset: (4.95em - 4em, 0.3em - 0.25em),
           bend: 31,
           stroke: color.red + 2pt,
           tip: (fill: color.red, symbol: ">"),
@@ -832,12 +829,12 @@ fn main() {
         #place(dx: 16em, dy: -12em)[#text(fill: color.red)[#b[Invalid?]]] ],
     ))
     #alternatives(start: 3)[
-      #label-arrow(<third>, <second>, to-offset: (1.5em - 4em, -2.8em), from-offset: (-1.3em, 3em), bend: -60)
+      #label-arrow(<third>, <second>, to-offset: (1.5em - 4em, -2.8em - 0.25em), from-offset: (-1.3em, 3em), bend: -60)
     ][
       #label-arrow(
         <third>,
         <second>,
-        to-offset: (1.5em - 4em, -2.8em),
+        to-offset: (1.5em - 4em, -2.8em - 0.25em),
         from-offset: (-1.3em, 3em),
         bend: -60,
         stroke: color.red + 2pt,
@@ -855,18 +852,9 @@ fn main() {
 
 ---
 
-```rs
-fn main() {
-    let a: String = utils::read_string();
-    let a2: String = a;
-    println!("{a} is awesome!");
-}
-```
+#ownership-example
 
-#text(font: "DejaVu Sans Mono")[
-  #text(rgb(205, 75, 62), weight: "bold")[error[E0382]]:
-  borrow of moved value: \`a\`
-]
+#err([0382], [borrow of moved value: \`a\`])
 
 #align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
 
@@ -874,10 +862,28 @@ fn main() {
 
 === What are the rules of ownership?
 
-#pause
-- Each value in Rust has an owner #pause
-- There can only be one owner at a time #pause
-- When the owner goes out of scope, the value will be cleaned up
+#let rule-one = [
+  1) Each value in Rust has an owner
+]
+
+#let rule-two = [
+  2) There can only be one owner at a time
+]
+
+#let rule-three = [
+  3) When the owner goes out of scope, the value will be cleaned up
+]
+
+#{
+  pause
+  rule-one
+  pause
+  linebreak()
+  rule-two
+  pause
+  linebreak()
+  rule-three
+}
 
 ---
 
@@ -885,108 +891,258 @@ fn main() {
   #ownership-example
 ]
 
----
-
-#{
-  set text(size: 0.75em)
-  hl(h: (2,))
-  ownership-example
-
-  place(center, dx: -4em)[
-    #grid(
-      columns: 2,
-      rows: 2,
-      column-gutter: 8em,
-      row-gutter: 1.5em,
-      a-table(two: false),
-      grid.cell(rowspan: 2)[
-        \
-        \
-        #heap-table
-      ],
-    )
-    #label-arrow(
-      <first>,
-      <second>,
-      to-offset: (1.5em - 4em, -2.8em),
-      from-offset: (4.95em - 4em, 0.3em),
-      bend: 31,
-    )
-  ]
-}
+How does this program violate the rules of ownership?
 
 ---
 
 #{
   set text(size: 0.75em)
-  hl(h: (3,))
-  ownership-example
+  alternatives[
+    #hl(h: (2,))
+    #ownership-example
+  ][
+    #hl(h: (3,))
+    #ownership-example
+  ][
+    #hl(h: (5,))
+    #ownership-example
+  ][
+    #hl(r: (4,))
+    #ownership-example
+  ]
 
-  place(center, dx: -4em)[
+  place(right + top, dx: -0.5em, dy: 0.5em)[
+    #set text(weight: "bold", size: 1.05em)
+    #let rule-box(color, body) = box(
+      inset: 0.75em,
+      fill: color.lighten(80%),
+      stroke: color.lighten(5%) + 1pt,
+      radius: 1mm,
+      body,
+    )
+    #alternatives[
+      #rule-box(blue)[#rule-one]
+    ][
+      #rule-box(blue)[#rule-two]
+    ][
+      #rule-box(blue)[
+        3) When the owner goes out of scope, \
+        the value will be cleaned up
+      ]
+    ][
+      #rule-box(color.red)[Variable used after value was moved]
+    ]
+  ]
+
+  place(center, dx: -4em, dy: 0.25em)[
     #grid(
       columns: 2,
       rows: 2,
       column-gutter: 8em,
       row-gutter: 1.5em,
-      {
-        set table.cell(fill: luma(170))
-        a-table(two: false)
-      },
+      alternatives[
+        #a-table(two: false)
+      ][
+        #set table.cell(fill: luma(170))
+        #a-table(two: false)
+      ],
       grid.cell(rowspan: 2)[
         \
         \
-        #heap-table
+        #alternatives-match((
+          "1-2": heap-table,
+          "3-": {
+            show table.cell: it => if it.y >= 2 { hide(it) } else { it }
+            set table(fill: (_, y) => if y == 1 { luma(240) } else if y >= 2 { luma(200) })
+            heap-table
+          },
+        ))
       ],
-      a-table(two: true),
+      only("2-")[
+        #a-table(two: true)
+      ],
     )
-    #label-arrow(
-      <third>,
-      <second>,
-      to-offset: (1.5em - 4em, -2.8em),
-      from-offset: (-1.3em, 3em),
-      bend: -60,
-    )
+    #alternatives[
+      #label-arrow(
+        <first>,
+        <second>,
+        to-offset: (1.5em - 4em, -2.8em - 0.25em),
+        from-offset: (4.95em - 4em, 0.3em - 0.25em),
+        bend: 31,
+      )
+    ][
+      #label-arrow(
+        <third>,
+        <second>,
+        to-offset: (1.5em - 4em, -2.8em - 0.25em),
+        from-offset: (-1.3em, 3em),
+        bend: -60,
+      )
+    ][
+      #label-arrow(
+        <third>,
+        <second>,
+        to-offset: (1.5em - 4em, -2.8em - 0.25em),
+        from-offset: (-1.3em, 3em),
+        bend: -60,
+        stroke: color.red + 2pt,
+        tip: (fill: color.red, symbol: ">"),
+      )
+      #place(dx: 16em, dy: -6.5em)[#text(fill: color.red)[#b[Invalid]]]
+    ]
   ]
 }
 
 ---
 
-#{
-  set text(size: 0.75em)
-  hl(h: (5,))
-  ownership-example
-
-  place(center, dx: -4em)[
-    #grid(
-      columns: 2,
-      rows: 2,
-      column-gutter: 8em,
-      row-gutter: 1.5em,
-      {
-        set table.cell(fill: luma(170))
-        a-table(two: false)
-      },
-      grid.cell(rowspan: 2)[
-        \
-        \
-        #show table.cell: it => if it.y >= 2 { hide(it) } else { it }
-        #set table(fill: (_, y) => if y == 1 { luma(240) } else if y >= 2 { luma(200) })
-        #heap-table
-      ],
-      a-table(two: true),
-    )
-    #label-arrow(
-      <third>,
-      <second>,
-      to-offset: (1.5em - 4em, -2.8em),
-      from-offset: (-1.3em, 3em),
-      bend: -60,
-      stroke: color.red + 2pt,
-      tip: (fill: color.red, symbol: ">"),
-    )
-    #place(dx: 16em, dy: -6.5em)[#text(fill: color.red)[#b[Invalid]]]
-  ]
+```rs
+fn main() {
+    let a: String = utils::read_string();
+    foo(a);
+    println!("{a}")
 }
+
+fn foo(s: String) {
+    println!("In function: {s}");
+}
+```
+
+#pause
+
+#err([0382], [borrow of moved value: \`a\`])
+
+---
+
+#codly-hl(
+  highlight-outset: (x: 0em, y: 0.3em),
+  highlights: (
+    (line: 7, start: 18, end: 28, fill: color.green.lighten(75%)),
+    (line: 3, start: 5, end: 12, fill: color.green.lighten(75%)),
+  ),
+  highlight-fill: color => color,
+  highlighted-lines: ((9, color.green.lighten(75%)),),
+)[
+  ```rs
+  fn main() {
+      let a: String = utils::read_string();
+      let a = foo(a);
+      println!("{a}")
+  }
+
+  fn foo(s: String) -> String {
+      println!("In function: {s}");
+      return s;
+  }
+  ```
+]
+
+#pause
+
+This is too verbose!
+
+= Borrowing
+
+#codly-hl(
+  highlight-outset: (x: 0em, y: 0.4em),
+  highlights: (
+    (line: 7, start: 11, end: 11, fill: color.green.lighten(75%)),
+    (line: 3, start: 9, end: 9, fill: color.green.lighten(75%)),
+  ),
+  highlight-fill: color => color,
+)[
+  ```rs
+  fn main() {
+      let a: String = utils::read_string();
+      foo(&a);
+      println!("{a}")
+  }
+
+  fn foo(s: &String) {
+      println!("In function: {s}");
+  }
+  ```
+]
+
+- \``&a`\` _borrows_ the value #pause
+  - Immutable borrow (*Read-only*) #pause
+  - What if we wanted to borrow, but write to the value?
+
+---
+
+#slide(repeat: 3, self => {
+  codly-hl(
+    highlight-outset: (x: 0em, y: 0.4em),
+    highlights: (
+      (line: 2, start: 8, end: 12, fill: color.green.lighten(75%)),
+      (line: 7, start: 11, end: 15, fill: color.green.lighten(75%)),
+      (line: 3, start: 9, end: 13, fill: color.green.lighten(75%)),
+    ),
+    highlight-fill: color => color,
+  )[
+    #animated-code(self, ```rs
+    fn main() {
+        let mut a: String = utils::read_string();
+        foo(&mut a);
+        println!("{a}")
+    }
+
+    fn foo(s: &mut String) {
+        println!("In function: {s}");
+        // Append an exclamation mark to the end //> 2
+        s.push('!'); //> 2
+    }
+    ```)
+  ]
+  only("3-")[- \``&mut a`\` mutably borrows the value (*Read and write*)]
+})
+
+---
+
+```rs
+fn main() {
+    let a: String = utils::read_string();
+
+    let b: &String = &a;
+    let c: &String = &a;
+    let d: &String = &a;
+
+    // ... a bunch of complicated code
+
+    println!("{b} {c} {d}");
+}
+```
+
+---
+
+#codly-hl(
+  highlight-outset: (x: 0em, y: 0.4em),
+  highlights: (
+    (line: 2, start: 8, end: 12, fill: color.green.lighten(75%)),
+    (line: 6, start: 13, end: 16, fill: color.green.lighten(75%)),
+    (line: 6, start: 27, end: 30, fill: color.green.lighten(75%)),
+  ),
+  highlight-fill: color => color,
+)[
+  ```rs
+  fn main() {
+      let mut a: String = utils::read_string();
+
+      let b: &String = &a;
+      let c: &String = &a;
+      let d: &mut String = &mut a;
+
+      // ... a bunch of complicated code
+
+      println!("{b} {c} {d}");
+  }
+  ```
+]
+
+#pause
+
+#place(bottom, dy: 0.5em)[
+  #err([0502], [cannot borrow \``a`\` as mutable because it is also borrowed as immutable])
+]
 
 = Further Reading
 
