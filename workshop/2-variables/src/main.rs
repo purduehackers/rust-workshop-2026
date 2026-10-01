@@ -1,5 +1,5 @@
-//! A program that demonstrates mutability,
-//! scopes, and data types.
+//! A program that demonstrates mutability and
+//! data types.
 //!
 //! Run this program by entering the following
 //! command into your terminal from the

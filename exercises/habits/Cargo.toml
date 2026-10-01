@@ -1,0 +1,18 @@
+[package]
+name = "habits"
+version = "0.1.0"
+edition = "2024"
+default-run = "habits"
+
+[dependencies]
+ratatui = "0.30"
+
+# Your program. `cargo run` runs this.
+[[bin]]
+name = "habits"
+path = "src/main.rs"
+
+# The finished version. `cargo run --bin habits-solution`.
+[[bin]]
+name = "habits-solution"
+path = "solutions/main.rs"

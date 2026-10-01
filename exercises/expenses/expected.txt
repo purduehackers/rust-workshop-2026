@@ -1,0 +1,14 @@
+coffee: $4 (food)
+rent: $800 (rent)
+bus ticket: $3 (travel)
+lunch: $12 (food)
+Total: $819
+rent: $800 (rent)
+Spent on Food: $16
+Removed coffee: $4
+No expense named coffee
+Spent on Food: $12
+rent: $800 (rent)
+bus ticket: $3 (travel)
+lunch: $12 (food)
+Total: $815

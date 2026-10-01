@@ -1,0 +1,215 @@
+[package]
+name = "solutions"
+version = "0.1.0"
+edition = "2024"
+
+# One binary per solution file, named "<chapter>-<exercise>":
+#   cargo run --bin 03-ownership-2
+
+[[bin]]
+name = "01-variables-1"
+path = "01-variables/1.rs"
+
+[[bin]]
+name = "01-variables-2"
+path = "01-variables/2.rs"
+
+[[bin]]
+name = "01-variables-3"
+path = "01-variables/3.rs"
+
+[[bin]]
+name = "01-variables-4"
+path = "01-variables/4.rs"
+
+[[bin]]
+name = "01-variables-5"
+path = "01-variables/5.rs"
+
+[[bin]]
+name = "02-control-flow-1"
+path = "02-control-flow/1.rs"
+
+[[bin]]
+name = "02-control-flow-2"
+path = "02-control-flow/2.rs"
+
+[[bin]]
+name = "02-control-flow-3"
+path = "02-control-flow/3.rs"
+
+[[bin]]
+name = "02-control-flow-4"
+path = "02-control-flow/4.rs"
+
+[[bin]]
+name = "03-ownership-1"
+path = "03-ownership/1.rs"
+
+[[bin]]
+name = "03-ownership-2"
+path = "03-ownership/2.rs"
+
+[[bin]]
+name = "03-ownership-3"
+path = "03-ownership/3.rs"
+
+[[bin]]
+name = "03-ownership-4"
+path = "03-ownership/4.rs"
+
+[[bin]]
+name = "03-ownership-5"
+path = "03-ownership/5.rs"
+
+[[bin]]
+name = "03-ownership-6"
+path = "03-ownership/6.rs"
+
+[[bin]]
+name = "04-borrowing-1"
+path = "04-borrowing/1.rs"
+
+[[bin]]
+name = "04-borrowing-2"
+path = "04-borrowing/2.rs"
+
+[[bin]]
+name = "04-borrowing-3"
+path = "04-borrowing/3.rs"
+
+[[bin]]
+name = "04-borrowing-4"
+path = "04-borrowing/4.rs"
+
+[[bin]]
+name = "04-borrowing-5"
+path = "04-borrowing/5.rs"
+
+[[bin]]
+name = "04-borrowing-6"
+path = "04-borrowing/6.rs"
+
+[[bin]]
+name = "04-borrowing-7"
+path = "04-borrowing/7.rs"
+
+[[bin]]
+name = "05-vectors-1"
+path = "05-vectors/1.rs"
+
+[[bin]]
+name = "05-vectors-2"
+path = "05-vectors/2.rs"
+
+[[bin]]
+name = "05-vectors-3"
+path = "05-vectors/3.rs"
+
+[[bin]]
+name = "05-vectors-4"
+path = "05-vectors/4.rs"
+
+[[bin]]
+name = "06-structs-1"
+path = "06-structs/1.rs"
+
+[[bin]]
+name = "06-structs-2"
+path = "06-structs/2.rs"
+
+[[bin]]
+name = "06-structs-3"
+path = "06-structs/3.rs"
+
+[[bin]]
+name = "06-structs-4"
+path = "06-structs/4.rs"
+
+[[bin]]
+name = "07-enums-1"
+path = "07-enums/1.rs"
+
+[[bin]]
+name = "07-enums-2"
+path = "07-enums/2.rs"
+
+[[bin]]
+name = "07-enums-3"
+path = "07-enums/3.rs"
+
+[[bin]]
+name = "08-traits-1"
+path = "08-traits/1.rs"
+
+[[bin]]
+name = "08-traits-2"
+path = "08-traits/2.rs"
+
+[[bin]]
+name = "08-traits-3"
+path = "08-traits/3.rs"
+
+[[bin]]
+name = "08-traits-4"
+path = "08-traits/4.rs"
+
+[[bin]]
+name = "09-display-1"
+path = "09-display/1.rs"
+
+[[bin]]
+name = "09-display-2"
+path = "09-display/2.rs"
+
+[[bin]]
+name = "10-constructors-1"
+path = "10-constructors/1.rs"
+
+[[bin]]
+name = "10-constructors-2"
+path = "10-constructors/2.rs"
+
+[[bin]]
+name = "11-iterators-1"
+path = "11-iterators/1.rs"
+
+[[bin]]
+name = "11-iterators-2"
+path = "11-iterators/2.rs"
+
+[[bin]]
+name = "11-iterators-3"
+path = "11-iterators/3.rs"
+
+[[bin]]
+name = "12-hashmap-1"
+path = "12-hashmap/1.rs"
+
+[[bin]]
+name = "12-hashmap-2"
+path = "12-hashmap/2.rs"
+
+[[bin]]
+name = "12-hashmap-3"
+path = "12-hashmap/3.rs"
+
+[[bin]]
+name = "13-result-1"
+path = "13-result/1.rs"
+
+[[bin]]
+name = "13-result-2"
+path = "13-result/2.rs"
+
+[[bin]]
+name = "13-result-3"
+path = "13-result/3.rs"
+
+[[bin]]
+name = "14-derive-1"
+path = "14-derive/1.rs"
+
+[[bin]]
+name = "14-derive-2"
+path = "14-derive/2.rs"

@@ -110,6 +110,18 @@ fn main() {
   )
 ])]
 
+= Outline
+
+- 5min introduction
+- 5min rust set-up
+- 15min lecturing about basic Rust concepts
+- 5min challenge problem
+- 20min lecturing
+- 5min challenge problem
+- 10min lecturing
+- 25min live coding
+- Rest of the time: Rust exercises
+
 = What is Rust?
 
 #pause
@@ -285,7 +297,7 @@ fn main() {
 = Setting Up
 
 #slide(align: center + horizon)[
-  === https://code.purduehackers.com/new/purduehackers/rust-workshop-2026
+  === https://phack.rs/rs-2026
 ]
 
 = Hello World
@@ -444,7 +456,7 @@ fn main() {
   animated-code(self)[```rs
   fn main() {
       // Reads a user input number from the terminal
-      let integer: i32 = utils::read_number();
+      let mut integer: i32 = utils::read_number();
       // If `integer` is positive, let's //> 2
       // subtract one until `integer` is zero. //> 2
       while integer != 0 { //> 2
@@ -637,7 +649,7 @@ fn main() {
       )),
     )
 
-    arrow("6-7", range: "6-", (to: "b.west", rel: (-0.5em, 0)), (to: "a.east", rel: (0.5em, 0)), name: "l1")
+    arrow(6, (to: "b.west", rel: (-0.5em, 0)), (to: "a.east", rel: (0.5em, 0)), name: "l1")
     (
       only("6-", content(
         ((to: "l1.start", rel: (0, -0.25)), 50%, (to: "l1.end", rel: (0, -0.25))),
@@ -664,14 +676,6 @@ fn main() {
       )),
     )
   })
-]
-
-#jump(7)
-
-#place(bottom + left, dy: 1em)[
-  #text(fill: black.transparentize(40%))[
-    Note: extremely simplified
-  ]
 ]
 
 ---
@@ -758,9 +762,21 @@ let a: String = utils::read_string();
 
 ---
 
-=== Remember: Rust manages memory automatically
+#align(center)[
+  #grid(
+    columns: 2,
+    column-gutter: 8em,
+    alternatives[#a-table(two: false)][#hide(a-table(two: false))], heap-table,
+  )
+  #only(1)[#label-arrow(
+    <first>,
+    <second>,
+    to-offset: (3.2em, 5.1em),
+    from-offset: (3.9em, 5.1em),
+  )]
+]
 
-- Rust inserts code to free up memory back to the operating system
+---
 
 #align(center)[
   #grid(
@@ -777,8 +793,8 @@ let a: String = utils::read_string();
   #label-arrow(
     <first>,
     <second>,
-    to-offset: (3.2em, 1.8em),
-    from-offset: (3.9em, 1.8em),
+    to-offset: (3.2em, 5.1em),
+    from-offset: (3.9em, 5.1em),
     stroke: color.red + 2pt,
     tip: (
       fill: color.red,
@@ -787,18 +803,18 @@ let a: String = utils::read_string();
   )
 ]
 
+=== Remember: Rust manages memory automatically
+
+- Rust inserts code to free up memory back to the operating system
+
+
 ---
 
 #{
   set text(size: 0.75em)
-  alternatives[
-    #codly-hl(
-      highlight-outset: (x: 0.25em, y: 0.3em),
-      highlights: ((line: 1, start: 11, end: 11), (line: 5, start: 1, end: 1)),
-    )[#ownership-example]
-  ][#ownership-example]
+  ownership-example
 
-  jump(3)
+  pause
 
   place(center, dx: -4em, dy: 0.25em)[
     #grid(
@@ -810,7 +826,7 @@ let a: String = utils::read_string();
       grid.cell(rowspan: 2)[
         \
         \
-        #alternatives(start: 3)[
+        #alternatives(start: 2)[
           #heap-table
         ][
           #show table.cell: it => if it.y >= 2 { hide(it) } else { it }
@@ -821,14 +837,14 @@ let a: String = utils::read_string();
       a-table(two: true),
     )
     #alternatives-match((
-      "3-4": label-arrow(
+      "2-3": label-arrow(
         <first>,
         <second>,
         to-offset: (1.5em - 4em, -2.8em - 0.25em),
         from-offset: (4.95em - 4em, 0.3em - 0.25em),
         bend: 31,
       ),
-      "5-": [
+      "4-": [
         #label-arrow(
           <first>,
           <second>,
@@ -840,14 +856,14 @@ let a: String = utils::read_string();
         )
         #place(dx: 16em, dy: -12em)[#text(fill: color.red)[#b[Invalid?]]] ],
     ))
-    #alternatives(start: 3)[
-      #label-arrow(<third>, <second>, to-offset: (1.5em - 4em, -2.8em - 0.25em), from-offset: (-1.3em, 3em), bend: -60)
+    #alternatives(start: 2)[
+      #label-arrow(<third>, <second>, to-offset: (1.5em - 4em, -2.8em - 0.25em), from-offset: (-1.3em, 0em), bend: -60)
     ][
       #label-arrow(
         <third>,
         <second>,
         to-offset: (1.5em - 4em, -2.8em - 0.25em),
-        from-offset: (-1.3em, 3em),
+        from-offset: (-1.3em, 0em),
         bend: -60,
         stroke: color.red + 2pt,
         tip: (fill: color.red, symbol: ">"),
@@ -855,7 +871,7 @@ let a: String = utils::read_string();
       #place(dx: 16em, dy: -6.5em)[#text(fill: color.red)[#b[Invalid]]]
     ]
   ]
-  uncover("6-")[
+  uncover("5-")[
     #place(horizon + right, dy: 5em, dx: 1em)[
       #align(center)[ #b[This is a memory safety bug! \ This leads to undefined behavior!] ]
     ]
@@ -987,7 +1003,7 @@ How does this program violate the rules of ownership?
         <third>,
         <second>,
         to-offset: (1.5em - 4em, -2.8em - 0.25em),
-        from-offset: (-1.3em, 3em),
+        from-offset: (-1.3em, 0em),
         bend: -60,
       )
     ][
@@ -995,7 +1011,7 @@ How does this program violate the rules of ownership?
         <third>,
         <second>,
         to-offset: (1.5em - 4em, -2.8em - 0.25em),
-        from-offset: (-1.3em, 3em),
+        from-offset: (-1.3em, 0em),
         bend: -60,
         stroke: color.red + 2pt,
         tip: (fill: color.red, symbol: ">"),

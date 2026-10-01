@@ -1,0 +1,28 @@
+[package]
+name = "terminal-playground"
+version = "0.1.0"
+edition = "2024"
+default-run = "playground"
+
+[dependencies]
+crossterm = "0.29"
+rand = "0.9"
+
+# The engine. `use engine::...` works from every binary below.
+[lib]
+name = "engine"
+path = "src/engine/lib.rs"
+
+# Your program. `cargo run` runs this.
+[[bin]]
+name = "playground"
+path = "src/main.rs"
+
+# Finished examples. `cargo run --bin balls`, `cargo run --bin snake`.
+[[bin]]
+name = "balls"
+path = "solutions/balls.rs"
+
+[[bin]]
+name = "snake"
+path = "solutions/snake.rs"

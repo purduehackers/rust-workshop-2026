@@ -1,0 +1,18 @@
+[package]
+name = "expenses"
+version = "0.1.0"
+edition = "2024"
+default-run = "expenses"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+
+# Your program. `cargo run -- <command>` runs this.
+[[bin]]
+name = "expenses"
+path = "src/main.rs"
+
+# The finished version. `cargo run --bin expenses-solution -- <command>`.
+[[bin]]
+name = "expenses-solution"
+path = "solutions/main.rs"
