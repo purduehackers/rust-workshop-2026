@@ -7,7 +7,7 @@
 //! command into your terminal from the
 //! `workshop` directory:
 //!
-//! cargo run --bin ownership
+//! cargo run --bin borrowing
 
 fn main() {
     let mut a: String = utils::read_string();

@@ -371,7 +371,8 @@ fn main() {
   ```
 ]
 
-Variables are _immutable_ (cannot change) by default; _mutability_ (can change) is opt-in
+- Variables are _immutable_ (cannot change) by default
+- _mutability_ (can change) is opt-in
 
 #align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
 
@@ -568,6 +569,10 @@ fn main() {
       #let label = rect(inset: 1em)[Purdue~Hackers]
       #context rect(inset: 1em, width: measure(label).width)[Purdue~Hackers]
     ]
+    #place(right + horizon, dx: 23em)[#align(center)[#box(width: 17em)[
+      #pause
+      Let's prove it! \ `xxd ~/purdue-hackers | less`
+    ]]]
   ],
 )
 
@@ -789,21 +794,6 @@ let a: String = utils::read_string();
   alternatives[
     #codly-hl(
       highlight-outset: (x: 0.25em, y: 0.3em),
-      highlights: ((line: 2, start: 5, end: 5), (line: 6, start: 5, end: 5)),
-    )[
-      ```rs
-      fn main() {
-          {
-              let a: String = utils::read_string();
-              let a2: String = a;
-              println!("{a} is awesome!");
-          }
-      }
-      ```
-    ]
-  ][
-    #codly-hl(
-      highlight-outset: (x: 0.25em, y: 0.3em),
       highlights: ((line: 1, start: 11, end: 11), (line: 5, start: 1, end: 1)),
     )[#ownership-example]
   ][#ownership-example]
@@ -1017,21 +1007,34 @@ How does this program violate the rules of ownership?
 
 ---
 
-```rs
-fn main() {
-    let a: String = utils::read_string();
-    foo(a);
-    println!("{a}")
-}
+#alternatives[
+  ```rs
+  fn main() {
+      let a: String = utils::read_string();
+      foo(a);
+      println!("{a}")
+  }
 
-fn foo(s: String) {
-    println!("In function: {s}");
-}
-```
+  fn foo(s: String) {
+      println!("In function: {s}");
+  }
+  ```
+][
+  #hl(r: (4,))
+  ```rs
+  fn main() {
+      let a: String = utils::read_string();
+      foo(a);
+      println!("{a}")
+  }
 
-#pause
+  fn foo(s: String) {
+      println!("In function: {s}");
+  }
+  ```
 
-#err([0382], [borrow of moved value: \``a`\`])
+  #err([0382], [borrow of moved value: \``a`\`])
+]
 
 ---
 
@@ -1039,7 +1042,8 @@ fn foo(s: String) {
   highlight-outset: (x: 0em, y: 0.3em),
   highlights: (
     (line: 7, start: 18, end: 28, fill: color.green.lighten(60%)),
-    (line: 3, start: 5, end: 12, fill: color.green.lighten(60%)),
+    (line: 3, start: 5, end: 13, fill: color.green.lighten(60%)),
+    (line: 4, start: 17, end: 17, fill: color.green.lighten(60%)),
   ),
   highlight-fill: color => color,
   highlighted-lines: ((9, color.green.lighten(60%)), (10, color.green.lighten(60%))),
@@ -1047,8 +1051,8 @@ fn foo(s: String) {
   ```rs
   fn main() {
       let a: String = utils::read_string();
-      let a = foo(a);
-      println!("{a}")
+      let a2 = foo(a);
+      println!("{a2}")
   }
 
   fn foo(s: String) -> String {

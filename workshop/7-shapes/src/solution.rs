@@ -40,13 +40,12 @@ pub trait Shape {
     fn area(&self) -> f64;
     fn color(&self) -> &Color;
     fn describe(&self) {
-        print!("{}: color=", Self::NAME);
+        print!("{}: area={}; color=", Self::NAME, self.area());
         match self.color() {
-            Color::Blue => print!("blue"),
-            Color::Red => print!("red"),
-            Color::Grayscale(level) => print!("grayscale({level})"),
+            Color::Blue => println!("blue"),
+            Color::Red => println!("red"),
+            Color::Grayscale(level) => println!("grayscale({level})"),
         }
-        println!("; area={}", self.area());
     }
 }
 
