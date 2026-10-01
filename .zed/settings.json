@@ -1,7 +1,4 @@
 {
-  "inlay_hints": {
-    "enabled": true,
-  },
   "languages": {
     "Typst": {
       "soft_wrap": "none",

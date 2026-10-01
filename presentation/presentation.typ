@@ -7,6 +7,8 @@
 #import "@preview/codly-languages:0.1.1": *
 #show: codly-init
 
+#show link: underline
+
 #codly(
   number-format: it => "",
   zebra-fill: none,
@@ -55,15 +57,16 @@ fn main() {
 }
 ```
 
-#let red(n) = (n, color.red.lighten(80%))
-#let green(n) = (n, color.green.lighten(75%))
-#let yellow(n) = (n, color.yellow.lighten(75%))
+#let red(n) = (n, color.red.lighten(70%))
+#let green(n) = (n, color.green.lighten(60%))
+#let yellow(n) = (n, color.yellow.lighten(60%))
 #let hl(g: (), r: (), h: ()) = codly(
   highlighted-lines: g.map(green) + r.map(red) + h.map(yellow),
 )
 
 #let err(n, body) = text(font: "DejaVu Sans Mono")[
   #text(rgb(205, 75, 62), weight: "bold")[error[E#n]]:
+  #show raw: set text(size: 1.2em)
   #body
 ]
 
@@ -307,7 +310,7 @@ fn main() {
 
 = Variables
 
-#slide(repeat: 3, self => {
+#slide(repeat: 4, self => {
   if self.subslide == 1 {
     ```rs
     fn main() {
@@ -341,12 +344,11 @@ fn main() {
         println!("The power level is now: {power}");
     }
     ```
-    text(font: "DejaVu Sans Mono")[
-      #text(rgb(205, 75, 62), weight: "bold")[error[E]]:
-    ]
-    err([0384], [cannot assign twice to immutable variable \`power\`])
+    if self.subslide == 4 {
+      err([0384], [cannot assign twice to immutable variable \`power\`])
 
-    align(center + bottom)[#image(height: 1fr, "ferris-confused.svg")]
+      align(center + bottom)[#image(height: 1fr, "ferris-confused.svg")]
+    }
   }
 })
 
@@ -355,7 +357,7 @@ fn main() {
 #codly-hl(
   highlight-outset: (x: 0em, y: 0.3em),
   highlights: (
-    (line: 2, start: 8, end: 12, fill: color.green.lighten(75%)),
+    (line: 2, start: 8, end: 12, fill: color.green.lighten(60%)),
   ),
   highlight-fill: color => color,
 )[
@@ -369,6 +371,8 @@ fn main() {
   ```
 ]
 
+Variables are _immutable_ (cannot change) by default; _mutability_ (can change) is opt-in
+
 #align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
 
 ---
@@ -378,22 +382,22 @@ fn main() {
     codly-hl(
       highlight-outset: (x: 0em, y: 0.3em),
       highlights: (
-        (line: 4, start: 8, end: 12, fill: color.green.lighten(75%)),
+        (line: 4, start: 8, end: 12, fill: color.green.lighten(60%)),
       ),
       highlight-fill: color => color,
-      highlighted-lines: ((10, color.green.lighten(75%)),),
+      highlighted-lines: ((10, color.green.lighten(60%)),),
     )[
       ```rs
       fn data_types() {
-          // Every variable has a singular, fixed type!
-          // `int` has the integer type `i32`
-          let mut int = 5;
-          // `int2` is optionally annotated explicitly
-          let int2: i32 = 5;
+          // Every variable has a type
+          // `integer` has the integer type `i32`
+          let mut integer = 5;
+          // `integer2` is optionally annotated explicitly
+          let integer2: i32 = 5;
           let true_or_false: bool = true;
           let decimal: f64 = 4.5;
 
-          int = decimal; // different types
+          integer = decimal; // different types
       }```
     ]
     text(font: "DejaVu Sans Mono")[
@@ -402,15 +406,15 @@ fn main() {
   } else {
     animated-code(self)[```rs
     fn data_types() {
-        // Every variable has a singular, fixed type!
+        // Every variable has a type
         // `int` has the integer type `i32`
-        let int = 5;
+        let integer = 5;
         // `int2` is optionally annotated explicitly //> 2
-        let int2: i32 = 5; //> 2
+        let integer2: i32 = 5; //> 2
         let true_or_false: bool = true; //> 3
         let decimal: f64 = 4.5; //> 4
-        
-        
+
+
     }```]
   }
 })
@@ -565,10 +569,6 @@ fn main() {
       #context rect(inset: 1em, width: measure(label).width)[Purdue~Hackers]
     ]
   ],
-  place(right + horizon, dx: 23em)[#align(center)[#box(width: 17em)[
-    #pause
-    Let's prove it! \ `xxd target/debug/ownership | less`
-  ]]],
 )
 
 ---
@@ -876,7 +876,7 @@ let a: String = utils::read_string();
 
 #ownership-example
 
-#err([0382], [borrow of moved value: \`a\`])
+#err([0382], [borrow of moved value: \``a`\`])
 
 #align(center + bottom)[#image(height: 1fr, "ferris-happy.png")]
 
@@ -937,7 +937,7 @@ How does this program violate the rules of ownership?
     #set text(weight: "bold", size: 1.05em)
     #let rule-box(color, body) = box(
       inset: 0.75em,
-      fill: color.lighten(80%),
+      fill: color.lighten(70%),
       stroke: color.lighten(5%) + 1pt,
       radius: 1mm,
       body,
@@ -1031,18 +1031,18 @@ fn foo(s: String) {
 
 #pause
 
-#err([0382], [borrow of moved value: \`a\`])
+#err([0382], [borrow of moved value: \``a`\`])
 
 ---
 
 #codly-hl(
   highlight-outset: (x: 0em, y: 0.3em),
   highlights: (
-    (line: 7, start: 18, end: 28, fill: color.green.lighten(75%)),
-    (line: 3, start: 5, end: 12, fill: color.green.lighten(75%)),
+    (line: 7, start: 18, end: 28, fill: color.green.lighten(60%)),
+    (line: 3, start: 5, end: 12, fill: color.green.lighten(60%)),
   ),
   highlight-fill: color => color,
-  highlighted-lines: ((9, color.green.lighten(75%)),),
+  highlighted-lines: ((9, color.green.lighten(60%)), (10, color.green.lighten(60%))),
 )[
   ```rs
   fn main() {
@@ -1053,7 +1053,8 @@ fn foo(s: String) {
 
   fn foo(s: String) -> String {
       println!("In function: {s}");
-      return s;
+      // Return the variable `s`
+      s
   }
   ```
 ]
@@ -1067,8 +1068,8 @@ This is too verbose!
 #codly-hl(
   highlight-outset: (x: 0em, y: 0.4em),
   highlights: (
-    (line: 7, start: 11, end: 11, fill: color.green.lighten(75%)),
-    (line: 3, start: 9, end: 9, fill: color.green.lighten(75%)),
+    (line: 7, start: 11, end: 11, fill: color.green.lighten(60%)),
+    (line: 3, start: 9, end: 9, fill: color.green.lighten(60%)),
   ),
   highlight-fill: color => color,
 )[
@@ -1095,9 +1096,9 @@ This is too verbose!
   codly-hl(
     highlight-outset: (x: 0em, y: 0.4em),
     highlights: (
-      (line: 2, start: 8, end: 12, fill: color.green.lighten(75%)),
-      (line: 7, start: 11, end: 15, fill: color.green.lighten(75%)),
-      (line: 3, start: 9, end: 13, fill: color.green.lighten(75%)),
+      (line: 2, start: 8, end: 12, fill: color.green.lighten(60%)),
+      (line: 7, start: 11, end: 15, fill: color.green.lighten(60%)),
+      (line: 3, start: 9, end: 13, fill: color.green.lighten(60%)),
     ),
     highlight-fill: color => color,
   )[
@@ -1139,9 +1140,9 @@ fn main() {
 #codly-hl(
   highlight-outset: (x: 0em, y: 0.4em),
   highlights: (
-    (line: 2, start: 8, end: 12, fill: color.green.lighten(75%)),
-    (line: 6, start: 13, end: 16, fill: color.green.lighten(75%)),
-    (line: 6, start: 27, end: 30, fill: color.green.lighten(75%)),
+    (line: 2, start: 8, end: 12, fill: color.green.lighten(60%)),
+    (line: 6, start: 13, end: 16, fill: color.green.lighten(60%)),
+    (line: 6, start: 27, end: 30, fill: color.green.lighten(60%)),
   ),
   highlight-fill: color => color,
 )[
@@ -1166,17 +1167,34 @@ fn main() {
   #err([0502], [cannot borrow \``a`\` as mutable because it is also borrowed as immutable])
 ]
 
-= Further Reading
+= Structs, Enums, and Traits
 
-- The Rust Programming Language
-- Rustlings
+#align(center + horizon)[
+  === Let's do some live coding!
+]
+
+---
+
+= Further Learning
+
+- _The Rust Programming Language_ book (#link("https://doc.rust-lang.org/stable/book/")[doc.rust-lang.org/stable/book])
+  - How I learned Rust
+  - We roughly covered the first 6 out of 21 chapters in this workshop
+- Rustlings (#link("https://rustlings.rust-lang.org/")[rustlings.rust-lang.org])
+  - Complementary learning exercises as you read the book
 
 #empty-slide[
   #place(dx: 0em, dy: 0em, bottom)[#image(width: 40%, "ferris-gesture.png")]
   #place(dx: 14em, dy: -2em)[#image(width: 50%, "speech.png")]
-  #place(dx: 19.5em, dy: 2.25em)[
-    #text(size: 2em)[
-      Thank you \ for listening!
+  #text(size: 2em)[
+    #alternatives[
+      #place(dx: 9.75em, dy: 1em)[
+        Thank you \ for listening!
+      ]
+    ][
+      #place(dx: 9.5em, dy: 1.25em)[
+        Let's do some \ exercises!
+      ]
     ]
   ]
 ]

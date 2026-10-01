@@ -1,5 +1,3 @@
-use std::io::{self, Write};
-
 /// Reads one line of user input.
 ///
 /// # Panics
@@ -11,8 +9,6 @@ pub fn read_string() -> String {
     // We will read the user input into a string.
     // First, we declare an empty string to read the user input into.
     let mut user_input_string = String::new();
-
-    io::stdout().flush().expect("Could not flush line.");
 
     // Read the actual user input into the string.
     std::io::stdin()

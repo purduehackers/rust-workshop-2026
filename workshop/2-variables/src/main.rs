@@ -26,10 +26,10 @@ fn data_types() {
 
     // `int` is the integer type `i32`
     let mut int = 5;
-    // `int2` is annotated explicitly //> 2
-    let int2: i32 = 5; //> 2
-    let true_or_false: bool = true; //> 3
-    let decimal: f64 = 4.5; //> 4
+    // `int2` is annotated explicitly
+    let int2: i32 = 5;
+    let true_or_false: bool = true;
+    let decimal: f64 = 4.5;
 
     // Try to uncomment this below:
 

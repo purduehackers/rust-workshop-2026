@@ -6,6 +6,7 @@ members = [
     "3-control-flow",
     "4-ownership",
     "5-borrowing",
-    "6-rectangle",
+    "6-for-loop",
+    "7-shapes",
     "utils",
 ]
