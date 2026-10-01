@@ -10,39 +10,40 @@
 
 fn main() {
     println!("Enter a number:");
-    let mut int = utils::read_number();
+    let mut integer = utils::read_number();
 
-    if int == 42 {
+    if integer == 42 {
         println!("42 is the meaning of life");
     }
 
-    let abs = if int < 0 {
-        -int
+    let abs = if integer < 0 {
+        -integer
     } else {
-        int
+        integer
     };
 
     println!("The absolute value of the number is {abs}");
 
-    if int < 0 {
+    if integer > 0 {
+        println!("The number is positive");
+
+        // If `integer` is positive, let's
+        // subtract one until `integer` is zero.
+        while integer != 0 {
+            println!("Count down: {integer}");
+            integer -= 1;
+        }
+    } else if integer == 0 {
+        println!("The number is zero");
+    } else if integer < 0 {
         println!("The number is negative");
 
-        // Challenge: if `int` is negative,
-        // add one until `int` is zero.
+        // Challenge: if `integer` is negative,
+        // add one until `integer` is zero,
+        // printing "Count up: "
 
         // YOUR CODE HERE
         
-    } else if int == 0 {
-        println!("The number is zero");
-    } else if int > 0 {
-        println!("The number is positive");
-
-        // If `int` is positive, let's
-        // subtract one until `int` is zero.
-        while int != 0 {
-            println!("Count down: {int}");
-            int -= 1;
-        }
     } else {
         println!("Whoops, mathematics broke");
     }

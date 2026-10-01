@@ -24,14 +24,14 @@ fn data_types() {
     // what the warnings look like.
     #![allow(unused)]
 
-    // `int` is the integer type `i32`
-    let mut int = 5;
-    // `int2` is annotated explicitly
-    let int2: i32 = 5;
+    // `integer` is the integer type `i32`
+    let mut integer = 5;
+    // `integer2` is annotated explicitly
+    let integer2: i32 = 5;
     let true_or_false: bool = true;
     let decimal: f64 = 4.5;
 
     // Try to uncomment this below:
 
-    // int = decimal;
+    // integer = decimal;
 }

@@ -407,9 +407,9 @@ Variables are _immutable_ (cannot change) by default; _mutability_ (can change) 
     animated-code(self)[```rs
     fn data_types() {
         // Every variable has a type
-        // `int` has the integer type `i32`
+        // `integer` has the integer type `i32`
         let integer = 5;
-        // `int2` is optionally annotated explicitly //> 2
+        // `integer2` is optionally annotated explicitly //> 2
         let integer2: i32 = 5; //> 2
         let true_or_false: bool = true; //> 3
         let decimal: f64 = 4.5; //> 4
@@ -425,14 +425,14 @@ Variables are _immutable_ (cannot change) by default; _mutability_ (can change) 
   animated-code(self)[```rs
   fn main() {
       // Reads a user input number from the terminal
-      let int: i32 = utils::read_number();
-      if int == 42 { //> 2
+      let integer: i32 = utils::read_number();
+      if integer == 42 { //> 2
           println!("42 is the meaning of life"); //> 2
       } //> 2
-      let abs = if int < 0 { //> 3
-          -int //> 3
+      let abs = if integer < 0 { //> 3
+          -integer //> 3
       } else { //> 3
-          int //> 3
+          integer //> 3
       }; //> 3
   }```]
 })
@@ -443,12 +443,12 @@ Variables are _immutable_ (cannot change) by default; _mutability_ (can change) 
   animated-code(self)[```rs
   fn main() {
       // Reads a user input number from the terminal
-      let int: i32 = utils::read_number();
-      // If `int` is positive, let's //> 2
-      // subtract one until `int` is zero. //> 2
-      while int != 0 { //> 2
-          println!("Count down: {int}"); //> 2
-          int -= 1; //> 2
+      let integer: i32 = utils::read_number();
+      // If `integer` is positive, let's //> 2
+      // subtract one until `integer` is zero. //> 2
+      while integer != 0 { //> 2
+          println!("Count down: {integer}"); //> 2
+          integer -= 1; //> 2
       } //> 2
   }```]
 })
